@@ -21,7 +21,7 @@ func main() {
 		}, // listV
 		func() map[string]Case {
 			return map[string]Case{
-				"mpd": Case{
+				"mpd": {
 					m: "hello",
 					s: 12,
 				},

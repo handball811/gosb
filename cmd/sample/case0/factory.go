@@ -86,3 +86,13 @@ func (_f *structFactory) NewStruct(
 		content: rContent,
 	}, nil
 }
+
+func (_f *structFactory) Builder() *structBuilder {
+	return &structBuilder{
+		f: _f,
+	}
+}
+
+type structBuilder struct {
+	f *structFactory
+}
