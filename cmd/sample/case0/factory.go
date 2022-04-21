@@ -33,7 +33,7 @@ func NewStructFactory(
 
 func (_f *structFactory) NewStruct(
 	key string, // required
-	memo *string, // optional,nillable
+	memo *string, // optional
 	main Case, // validation
 	list *[]Case, // optional,validation
 	mp *map[string]Case, // default,validation
@@ -95,4 +95,31 @@ func (_f *structFactory) Builder() *structBuilder {
 
 type structBuilder struct {
 	f *structFactory
+
+	// properties
+	key     string           // required
+	memo    *string          // optional,nillable
+	main    Case             // validation
+	list    *[]Case          // optional,validation
+	mp      *map[string]Case // default,validation
+	content *Case            // default,optional,validation
+
+	// flag
+	keyFlag  bool
+	memoFlag bool
+	mainFlag bool
+}
+
+func (_b *structBuilder) reset() {
+	_b.key = getDefault[string]()
+	_b.memo = getDefault[*string]()
+	_b.main = getDefault[Case]()
+	_b.list = getDefault[*[]Case]()
+	_b.mp = getDefault[*map[string]Case]()
+	_b.content = getDefault[*Case]()
+}
+
+func getDefault[T any]() T {
+	var t T
+	return t
 }
