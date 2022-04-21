@@ -1,26 +1,27 @@
-package method_test
+package templates_test
 
 import (
 	"text/template"
 
-	"github.com/handball811/gosb/templates/method"
+	"github.com/handball811/gosb/templates"
+	"github.com/handball811/gosb/templates/parse"
 	"github.com/handball811/gosb/templates/test_helper"
 )
 
 func ExampleBodyNewStruct() {
-	tmpl := template.Must(method.METHOD_TEMPLATE.Parse(`{{template "body_new_struct" .}}`))
+	tmpl := template.Must(parse.SetUpTemplate(templates.BodyNewStructTmpl).Parse(`{{template "body_new_struct" .}}`))
 
 	m := dummyMethod()
-	m.Body = &method.BodyNewStruct{
+	m.Body = &templates.BodyNewStruct{
 		VarPrefix: "xxxReal_",
-		Fields: []method.Field{
+		Fields: []templates.Field{
 			dummyFields["key"],
 			dummyFields["note"],
 			dummyFields["age"],
 			dummyFields["data"],
 		},
 	}
-	test_helper.RunCase(tmpl, []method.Method{m})
+	test_helper.RunCase(tmpl, []templates.Method{m})
 
 	// Output:
 	// // key
@@ -30,33 +31,33 @@ func ExampleBodyNewStruct() {
 	// // note
 	// var xxxReal_note *string
 	// if note == nil {
-	//     xxxReal_note = _f.noteDefault()
+	// 	xxxReal_note = _f.noteDefault()
 	// } else {
-	//     xxxReal_note = note
+	// 	xxxReal_note = note
 	// }
 	//
 	// // age
 	// var xxxReal_age int
 	// if age == nil {
-	//     xxxReal_age = _f.defaultAge()
+	// 	xxxReal_age = _f.defaultAge()
 	// } else {
-	//     xxxReal_age = age
+	// 	xxxReal_age = age
 	// }
 	// if err := _f.ageValidation(xxxReal_age); err != nil {
-	//     return nil, fmt.Errorf("`age` validation error: %v", err)
+	// 	return nil, fmt.Errorf("'age' validation error: %v", err)
 	// }
 	//
 	// // data
 	// var xxxReal_data *Data
 	// xxxReal_data = data
 	// if err := _f.dataValidation(xxxReal_data); err != nil {
-	//     return nil, fmt.Errorf("`data` validation error: %v", err)
+	// 	return nil, fmt.Errorf("'data' validation error: %v", err)
 	// }
 	//
 	// return &factory {
-	//     key: xxxReal_key,
-	//     note: xxxReal_note,
-	//     age: xxxReal_age,
-	//     data: xxxReal_data,
+	// 	key: xxxReal_key,
+	// 	note: xxxReal_note,
+	// 	age: xxxReal_age,
+	// 	data: xxxReal_data,
 	// }, nil
 }

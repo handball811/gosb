@@ -1,4 +1,4 @@
-package method
+package templates
 
 type Field struct {
 	Name           string

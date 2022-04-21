@@ -1,14 +1,13 @@
 package templates_test
 
 import (
-	"text/template"
-
 	"github.com/handball811/gosb/templates"
+	"github.com/handball811/gosb/templates/parse"
 	"github.com/handball811/gosb/templates/test_helper"
 )
 
 func ExampleNewStruct() {
-	tmpl := template.Must(template.ParseGlob("new_struct.gtpl"))
+	tmpl := parse.SetUpTemplate(templates.NewStructTmpl)
 	tmpl, _ = tmpl.Parse(`{{template "new_struct" .}}`)
 	test_helper.RunCase(tmpl, []templates.NewStruct{
 		{
@@ -32,17 +31,17 @@ func ExampleNewStruct() {
 
 	// Output:
 	// func NewStructFactory(
-	//     name string,
-	//     number *int,
+	// 	name string,
+	// 	number *int,
 	// ) *structFactory {
-	//     return &structFactory{
-	//         name: name,
-	//         number: number,
-	//     }
+	// 	return &structFactory{
+	// 		name: name,
+	// 		number: number,
+	// 	}
 	// }
 	// func NewNoneFactory(
 	// ) *noneFactory {
-	//     return &noneFactory{
-	//     }
+	// 	return &noneFactory{
+	// 	}
 	// }
 }

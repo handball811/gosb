@@ -41,7 +41,7 @@ func RunCase[T any](
 	for _, c := range cases {
 		err := tmpl.Execute(os.Stdout, c)
 		if err != nil {
-			log.Fatalf("executing template: %v", err)
+			log.Printf("executing template: %v", err)
 		}
 	}
 }

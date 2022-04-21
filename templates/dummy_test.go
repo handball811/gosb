@@ -1,11 +1,11 @@
-package method_test
+package templates_test
 
 import (
-	"github.com/handball811/gosb/templates/method"
+	"github.com/handball811/gosb/templates"
 )
 
-func dummyMethod() method.Method {
-	return method.Method{
+func dummyMethod() templates.Method {
+	return templates.Method{
 		NameVar:  "_f",
 		Name:     "factory",
 		FuncName: "start",
@@ -14,11 +14,11 @@ func dummyMethod() method.Method {
 			"f":        "func() error",
 		},
 		Returns: []string{"int", "error"},
-		Body:    &method.BodyDummy{},
+		Body:    &templates.BodyDummy{},
 	}
 }
 
-var dummyFields = map[string]method.Field{
+var dummyFields = map[string]templates.Field{
 	"key": {
 		Name:           "key",
 		Type:           "string",

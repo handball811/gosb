@@ -4,12 +4,13 @@ import (
 	"text/template"
 
 	"github.com/handball811/gosb/templates"
+	"github.com/handball811/gosb/templates/parse"
 	"github.com/handball811/gosb/templates/test_helper"
 )
 
 func ExampleImports() {
-	tmpl := template.Must(template.ParseGlob("imports.gtpl"))
-	tmpl, _ = tmpl.Parse(`{{template "imports" .}}`)
+	tmpl := parse.SetUpTemplate(templates.ImportsTmpl)
+	tmpl = template.Must(tmpl.Parse(`{{template "imports" .}}`))
 
 	test_helper.RunCase(tmpl, []templates.Imports{
 		templates.Imports([]string{}),

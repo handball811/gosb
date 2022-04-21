@@ -1,4 +1,4 @@
-package method
+package templates
 
 type Body interface {
 	Name() string

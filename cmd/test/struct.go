@@ -1,15 +1,16 @@
 package main
 
+//go:generate go run ../../ -type Struct
 type Struct struct {
-	key     string
-	memo    *string         `sc:"optional,nillable"`
-	main    Case            `sc:"validation"`
-	list    []Case          `sc:"optional,validation"`
-	mp      map[string]Case `sc:"default,validation"`
-	content Case            `sc:"default,optional,validation"`
+	Key     string
+	Memo    *string         `sc:"optional,nillable"`
+	Main    Case            `sc:"validation"`
+	List    []Case          `sc:"optional,validation"`
+	Mp      map[string]Case `sc:"default,validation"`
+	Content Case            `sc:"default,optional,validation"`
 }
 
 type Case struct {
-	m string
-	s int
+	M string
+	S int
 }
