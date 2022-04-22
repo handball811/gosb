@@ -3,36 +3,9 @@ package parse
 import (
 	"bytes"
 	"fmt"
-	"io/fs"
-	"os"
-	"path/filepath"
 	"strings"
 	"text/template"
 )
-
-func ParseTemplates(root string) *template.Template {
-	tpl := template.New("")
-
-	funcMap := template.FuncMap{
-		"InlineTemplate": GenerateInlineTemplate(tpl),
-	}
-	tpl = tpl.Funcs(funcMap)
-	err := filepath.Walk(root, func(path string, info fs.FileInfo, err error) error {
-		if info == nil || info.IsDir() || !strings.HasSuffix(path, ".gtpl") {
-			return err
-		}
-		b, err := os.ReadFile(path)
-		if err != nil {
-			return err
-		}
-		tpl = template.Must(tpl.Parse(string(b)))
-		return nil
-	})
-	if err != nil {
-		panic(err)
-	}
-	return tpl
-}
 
 func SetUpTemplate(templates ...string) *template.Template {
 	tpl := template.New("")

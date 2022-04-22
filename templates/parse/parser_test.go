@@ -18,13 +18,10 @@ func ExampleGenerateInlineTemplate() {
 	test_helper.RunCase(tmpl, []ExampleInlineStruct{
 		{
 			Name:           "returns",
-			InlineTemplate: parse.GenerateInlineTemplate(parse.ParseTemplates("../../source")),
-			Data: []string{
-				"int",
-				"string",
-			},
+			InlineTemplate: parse.GenerateInlineTemplate(parse.SetUpTemplate(`{{ define "returns"}}{{.}}{{end}}`)),
+			Data:           "int",
 		},
 	})
 	// Output:
-	// (int, string)
+	// int
 }

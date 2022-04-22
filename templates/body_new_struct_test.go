@@ -13,6 +13,7 @@ func ExampleBodyNewStruct() {
 
 	m := dummyMethod()
 	m.Body = &templates.BodyNewStruct{
+		Struct:    "struct",
 		VarPrefix: "xxxReal_",
 		Fields: []templates.Field{
 			dummyFields["key"],
@@ -54,7 +55,7 @@ func ExampleBodyNewStruct() {
 	// 	return nil, fmt.Errorf("'data' validation error: %v", err)
 	// }
 	//
-	// return &factory {
+	// return &struct {
 	// 	key: xxxReal_key,
 	// 	note: xxxReal_note,
 	// 	age: xxxReal_age,

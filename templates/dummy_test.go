@@ -27,6 +27,7 @@ func dummyMethod() templates.Method {
 var dummyFields = map[string]templates.Field{
 	"key": {
 		Name:           "key",
+		VarName:        "key",
 		Type:           "string",
 		Pointer:        false,
 		Optional:       false,
@@ -35,6 +36,7 @@ var dummyFields = map[string]templates.Field{
 	},
 	"note": {
 		Name:           "note",
+		VarName:        "note",
 		Type:           "*string",
 		Pointer:        true,
 		Optional:       true,
@@ -43,6 +45,7 @@ var dummyFields = map[string]templates.Field{
 	},
 	"age": {
 		Name:           "age",
+		VarName:        "age",
 		Type:           "int",
 		Pointer:        false,
 		Optional:       false,
@@ -51,6 +54,7 @@ var dummyFields = map[string]templates.Field{
 	},
 	"data": {
 		Name:           "data",
+		VarName:        "data",
 		Type:           "*Data",
 		Pointer:        true,
 		Optional:       false,
