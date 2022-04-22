@@ -12,13 +12,13 @@ var BodyNewStructTmpl = parse.GenerateTemplate(
 {{- $tempVar := (printf "%s%s" $.Body.VarPrefix $field.Name)  }}
 var {{$tempVar}} {{$field.Type}}
 {{- if $field.DefaultFunc}}
-if {{$field.Name}} == nil {
+if {{$field.VarName}} == nil {
 	{{$tempVar}} = {{$.NameVar}}.{{$field.DefaultFunc}}()
 } else {
-	{{$tempVar}} = {{if and $field.Optional (not $field.Pointer) -}}*{{- end -}}{{$field.Name}}
+	{{$tempVar}} = {{if and $field.Optional (not $field.Pointer) -}}*{{- end -}}{{$field.VarName}}
 }
 {{- else}}
-{{$tempVar}} = {{$field.Name}}
+{{$tempVar}} = {{if and $field.Optional (not $field.Pointer) -}}*{{- end -}}{{$field.VarName}}
 {{- end }}
 {{- if $field.ValidationFunc}}
 if err := {{$.NameVar}}.{{$field.ValidationFunc}}({{$tempVar}}); err != nil {
@@ -26,7 +26,7 @@ if err := {{$.NameVar}}.{{$field.ValidationFunc}}({{$tempVar}}); err != nil {
 }
 {{- end}}
 {{end}}
-return &{{.Name}} {
+return &{{.Body.Struct}} {
 {{- range $i, $field := .Body.Fields}}
 	{{- $tempVar := printf "%s%s" $.Body.VarPrefix $field.Name }}
 	{{$field.Name}}: {{$tempVar}},
@@ -37,6 +37,7 @@ return &{{.Name}} {
 var _ Body = new(BodyNewStruct)
 
 type BodyNewStruct struct {
+	Struct    string
 	VarPrefix string
 	Fields    []Field
 }

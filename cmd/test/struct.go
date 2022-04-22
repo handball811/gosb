@@ -1,5 +1,7 @@
 package main
 
+import "time"
+
 //go:generate go run ../../ -type Struct
 type Struct struct {
 	Key     string
@@ -8,6 +10,7 @@ type Struct struct {
 	List    []Case          `sc:"optional,validation"`
 	Mp      map[string]Case `sc:"default,validation"`
 	Content Case            `sc:"default,optional,validation"`
+	D       time.Duration
 }
 
 type Case struct {

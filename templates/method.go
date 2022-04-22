@@ -8,8 +8,8 @@ var MethodTmpl = parse.GenerateTemplate(
 	MethodName,
 	`
 func({{.NameVar}} *{{.Name}}) {{.FuncName}}(
-{{- range $name, $type := .Args }}
-	{{$name}} {{$type}},
+{{- range $i, $arg := .Args }}
+	{{ $arg.Name }} {{ $arg.Type }},{{if $arg.Comment}} // {{ $arg.Comment }}{{end}}
 {{- end}}
 ) {{template "returns" .Returns }} {
 {{- if .Body}}
@@ -27,7 +27,7 @@ type Method struct {
 	NameVar  string
 	Name     string
 	FuncName string
-	Args     map[string]string
+	Args     []Arg
 	Returns  []string
 	Body     Body
 }

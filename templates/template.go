@@ -1,6 +1,8 @@
 package templates
 
 import (
+	"bytes"
+	"go/format"
 	"os"
 	"strings"
 
@@ -12,13 +14,13 @@ var TemplateTmpl = strings.Trim(`
 
 package {{ .PackageName }}
 
-{{- template "imports" .Imports }}
+{{ template "imports" .Imports }}
 
-{{- template "struct" .Factory.Struct}}
+{{ template "struct" .Factory.Struct}}
 
-{{- template "new_struct" .Factory.NewStruct}}
+{{ template "new_struct" .Factory.NewStruct}}
 
-{{- template "method" .Methods.NewStruct}}
+{{ template "method" .Methods.NewStruct}}
 `, "\n")
 
 var AllTemplates = []string{
@@ -50,6 +52,7 @@ type TemplateMethods struct {
 func OutputTemplate(
 	templatePath string,
 	output string,
+	template *Template,
 ) error {
 	file, err := os.Create(output)
 	if err != nil {
@@ -57,23 +60,16 @@ func OutputTemplate(
 	}
 	defer file.Close()
 
+	var buf bytes.Buffer
+
 	tmpl := parse.SetUpTemplate(AllTemplates...)
-	if err := tmpl.Execute(file, &Template{
-		PackageName: "main",
-		Imports:     []string{"fmt"},
-		Factory: TemplateFactory{
-			Struct: Struct{
-				Name: "hello",
-			},
-			NewStruct: NewStruct{
-				Struct: Struct{
-					Name: "hello",
-				},
-				FuncName: "world",
-			},
-		},
-	}); err != nil {
+	if err := tmpl.Execute(&buf, template); err != nil {
 		return err
 	}
+	p, err := format.Source(buf.Bytes())
+	if err != nil {
+		return err
+	}
+	file.Write(p)
 	return nil
 }

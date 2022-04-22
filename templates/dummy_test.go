@@ -9,9 +9,15 @@ func dummyMethod() templates.Method {
 		NameVar:  "_f",
 		Name:     "factory",
 		FuncName: "start",
-		Args: map[string]string{
-			"duration": "time.Duration",
-			"f":        "func() error",
+		Args: []templates.Arg{
+			{
+				Name: "duration",
+				Type: "time.Duration",
+			},
+			{
+				Name: "f",
+				Type: "func() error",
+			},
 		},
 		Returns: []string{"int", "error"},
 		Body:    &templates.BodyDummy{},
